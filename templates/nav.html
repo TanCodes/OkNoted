@@ -1,0 +1,56 @@
+{% load static %}
+{% block content %}
+
+<style>
+
+.box  {
+  padding: 80px 0 8px;
+  position: relative;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 150px;
+  height: 16px;
+  transform: skew(-12deg) translateX(-50%);
+  background: #f0f567;
+  z-index: -1;
+
+}
+
+</style>
+<nav class="navbar navbar-expand-lg navbar-scroll fixed-top shadow-0 rounded-bottom ">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <i style="color: #404d5b; font-size: large ;" class="box"> 
+          <strong> 
+          <i class="fa-regular fa-clipboard"></i> OkNoted
+        </strong> 
+        </i>
+      </a>
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ourstory' %}">Our Story</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-light" href="{% url 'logout' %}">Logout</a>
+          </li>
+          {% else %}
+          <button type="button" class="btn btn-dark  ms-3"><a class="text-white nav-link " href="{% url 'loginPage' %}">Get Started</a></button>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+{% endblock %}

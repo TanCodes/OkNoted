@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+<title>OkNoted | Login</title>
+{% block content %}
+
+<style>
+  body{
+    background-color: #eee;
+  }
+
+  /* section {
+    margin-top: 6%;
+  } */
+</style>
+
+<!-- main - top -->
+<div class="px-4 py-5 my-5 text-center">
+  <img class="d-block mx-auto mb-4 img-thumbnail" src="https://img.freepik.com/free-photo/blank-note-with-thumbtack_1156-450.jpg?w=740&t=st=1678299737~exp=1678300337~hmac=d93454566d0c3b694a10b20cc7a6ec09ab4fa2f70c61c8165aea03882554f586" alt="" width="72" height="57">
+  <h1 class="display-4 fw-bold"> A good <span class="text-warning ">note </span> is a good memory.  </h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4"></p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button type="button" class="btn btn-primary btn-lg px-4 gap-3"> <a class="text-white" href="#log">Time to log in!</a> </button>
+    </div>
+  </div>
+</div>
+
+
+  <section class="">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center" id="logintag">
+            
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1" id="log">
+                    
+                {% if success_signup %}
+                 
+                  <div class="alert alert-success" role="alert">
+                    Registered successfully! Please login.
+                  </div>
+
+               {% endif %}
+
+                {% if Error_message %}
+                  
+                <div class="alert alert-warning" role="alert">
+                  All fields are required!
+                </div>
+
+              {% endif %}
+
+              {% if Error_message_unauthorized %}
+                  
+              <div class="alert alert-danger" role="alert">
+                Enter details are not a valid details!
+              </div>
+
+            {% endif %}
+
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+                  <form action="{% url 'loginPage' %}" method="POST" >
+                    {% csrf_token %}
+                    <!-- Email input -->
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" id="form2Example1" class="form-control" placeholder="Your username" name="login_username"/>
+                      </div>
+                    </div>
+                    
+                    <!-- Password input -->
+                    
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" id="form2Example2" class="form-control" placeholder="Your password" name="login_pass" />
+                      </div>
+                    </div>
+
+                    <!-- 2 column grid layout for inline styling -->
+                    <div class="row mb-4">
+                      <div class="col d-flex justify-content-center">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                          <label class="form-check-label" for="form2Example31"> Remember me </label>
+                        </div>
+                      </div>
+                  
+                      <div class="col">
+                        <!-- Simple link -->
+                        <a href="#!">Forgot password?</a>
+                      </div>
+                    </div>
+                  
+                    <!-- Submit button -->
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <button type="submit" class="btn btn-primary btn-block mb-4 ">Log in</button>
+                    </div>
+                    
+                  
+                    <!-- Register buttons -->
+                    <div class="text-center">
+                      <p>Not a member? <a href="{% url 'signup' %}">Register</a></p>
+                    </div>
+                  </form>
+                
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+  
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                    class="img-fluid" alt="Sample image">
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> 
+{% include 'footer.html' %}
+{% endblock %}

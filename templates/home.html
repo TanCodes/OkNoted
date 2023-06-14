@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>OkNoted | HOME</title>
+{% block content %}
+
+<br> <br> <br>
+  <div class="container">
+    👋 Hello , <strong>{{auth_user}}</strong> 
+
+    <!-- main -->
+<section class="rounded" style="background-color: #c6e2f3; box-shadow: rgba(126, 170, 228, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; background-image: url(https://img.freepik.com/free-vector/meadow-with-grass-pond-morning_107791-10142.jpg?w=1060&t=st=1678301362~exp=1678301962~hmac=dc344c49a807fb70921e1779553fb867a7970924dcd9a79bfb89a8c48521f7e8); background-repeat: no-repeat; background-size: 100% 100%;   background-color: rgba(218, 191, 191, 0.486); background-blend-mode: overlay">
+  <div class="container my-3 py-5 text-dark">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="card">
+          <div class="card-body p-2">
+
+            <form action="{% url 'addNotes' %}" method="post">
+
+            <div class="d-flex flex-start w-100 ">
+  
+              <img  class="rounded-circle shadow-1-strong me-3 mt-1"
+                src="https://img.freepik.com/premium-vector/cartoon-cute-cat-writing-vector_39961-2542.jpg?w=2000" alt="avatar" width="65"
+                height="65" />
+
+
+                {% csrf_token %}
+                  <div class="w-100">
+                    <div class="form-outline">
+                      <textarea type="text" class="form-control" id="textAreaExample" rows="6" name="get_note" placeholder="What you want to note?"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end mt-1">
+                      <button type="submit" class="btn">
+                        <i style="color:rgb(159, 204, 244); font-size: 50px;" class="fa-solid fa-circle-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+            
+
+            </div>
+          </form>
+       <div class="text-muted fst-italic text-center p-2">
+        <p>
+        “I go through dozens of notebooks every year and write down everything that occurs to me each day, an idea not written down is an idea lost. When inspiration calls, you’ve got to capture it.” – Richard Branson
+
+        </p>
+
+      </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    <!-- main end-->
+<hr>
+
+  <div class="container">
+    <div class="text-center fst-italic">
+      Wow you have noted <strong>{{total_notes}}</strong> notes till today!
+  </div>
+
+
+    <div class="row mt-2 mb-0">
+      {% for display in dis %}
+        <div class="col-lg-4 mt-2">
+            <div class="card card-margin ">
+
+                <div class="card-body">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+
+
+                          <div style="background-color:{% cycle 'coral' '#5e60ce' '#3a5a40' '#184e77' 'grey' 'lightblue' '#212529' '#c9184a' %}" class="widget-49-date-primary" >
+                                <span class="widget-49-date-day">{{ display.last_updated|date:"d" }}</span>
+                                <span class="widget-49-date-month">{{ display.last_updated|date:"M" }}</span>
+                            </div>
+                            <div class="widget-49-meeting-info">
+                                <span class="widget-49-pro-title fw-bold">{{ display.body|truncatechars:20|upper  }}</span>
+                                <span class="widget-49-meeting-time">{{ display.last_updated}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="widget-49-meeting-points wrapper">
+                          
+                          <form action="{% url 'updateNote' display.id  %}" method="post"> 
+                            {% csrf_token %}
+                            <textarea class="p-2" style="outline: none ; border: 1px solid #d1d5db; border-radius: 8px ; box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;"
+                             name="txtarea" contenteditable="true"  id="textid" cols="20" rows="12">{{display.body}} 
+                            </textarea>
+
+                            <div style="display:grid ; grid-template-columns:1fr 1fr 1fr">
+
+                              <div class="d-flex justify-content-start ">                   
+                                  <a class="btn mt-3"  href="/deleteNote/{{display.id}}" title="Delete">
+                                    <i style="font-size:30px; color: #ec8585;" class="fa-solid fa-trash-can"></i>
+                                  </a>
+                              </div>
+
+                              <div class="d-flex justify-content-center mt-4" style="font-size: 1rem;">
+                                
+                              Total words : {{ display.body|wordcount }}
+                              </div>
+              
+                      
+
+                              <div class="d-flex justify-content-end ">
+                                <button title="Edit" type="submit" class="btn">
+                                  <i style="font-size:35px; color: #6eabf1;" class="fa-solid fa-square-pen p-3"></i>
+                                </button>
+                              </div>
+
+                          </div>
+                          </form>
+
+                        </div>
+
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<img width="500" class="rounded mx-auto d-block p-4" src="data:image/png;base64,{{img_tag}}"/>
+
+<br>
+
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}
+ 
